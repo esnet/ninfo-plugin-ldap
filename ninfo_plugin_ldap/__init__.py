@@ -34,13 +34,7 @@ class ldap_plugin(PluginBase):
         res = self.l.search_s(self.dsn, self.ldap.SCOPE_SUBTREE, search)
         if not res:
             return None
-        res = res[0]
-        key, values = res
-
-        ret = {}
-        for k,v in values.items():
-            ret[k] = ', '.join(v)
-
-        return {'record': ret}
+        
+        return {'records': res}
 
 plugin_class = ldap_plugin
