@@ -1,7 +1,7 @@
 <%
-    fields = ("preferredDisplayName", "eduPersonPrimaryAffiliation", "eduPersonAffiliation", "title", "eduPersonPrimaryOrgUnitDN", "mail", "campusAddress", "telephoneNumber", "uid")
-    if fields in plugin_config:
-        fields = plugin_config['fields'].split()
+    fields = plugin_config['fields'].split()
+    if not fields:
+        fields = ("preferredDisplayName", "eduPersonPrimaryAffiliation", "eduPersonAffiliation", "title", "eduPersonPrimaryOrgUnitDN", "mail", "campusAddress", "telephoneNumber", "uid")
 %>
 
 <table border="1" cellpadding="1" cellspacing="0">
