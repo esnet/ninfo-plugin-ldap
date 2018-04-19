@@ -7,7 +7,7 @@
 %for r in records:
 <% cn, values = r %>
 %for f in [x for x in fields if x in values]:
-<% result = ', '.join(values[f]) %>${f}  ${result}
+<% result = ', '.join(values[f]).replace(strip, '') %>${f}  ${result}
 %endfor
 
 %endfor

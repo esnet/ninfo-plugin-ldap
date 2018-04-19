@@ -19,6 +19,7 @@ class ldap_plugin(PluginBase):
         dsn         = c['dsn']
         searchpre   = c.get('searchpre', 'uid')
         searchpost  = c.get('searchpost', '')
+        strip       = c.get('strip', '')
         ignore_cert = 'ignore_cert' in c
         if ignore_cert:
             ldap.set_option(ldap.OPT_X_TLS_REQUIRE_CERT, 0)
@@ -28,6 +29,7 @@ class ldap_plugin(PluginBase):
         self.dsn = dsn
         self.searchpre = searchpre
         self.searchpost = searchpost
+        self.strip = strip
 
     def get_info(self, arg):
         search = '%s=%s%s' % (self.searchpre, arg, self.searchpost)
@@ -35,6 +37,6 @@ class ldap_plugin(PluginBase):
         if not res:
             return None
         
-        return {'records': res}
+        return {'records': res, 'strip': self.strip}
 
 plugin_class = ldap_plugin

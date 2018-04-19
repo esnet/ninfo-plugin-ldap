@@ -12,7 +12,7 @@ cn, values = r
 <table border="1" cellpadding="1" cellspacing="0">
 %for f in [x for x in fields if x in values]:
 <%
-result = ', '.join(values[f])
+result = ', '.join(values[f]).replace(strip, '')
 %>
 <tr>
     <td> ${f} </td>
