@@ -5,7 +5,14 @@
 %>
 
 %for r in records:
-%for f in [x for x in fields if x in r]:
-${f}  ${record[f]}
+<%
+cn, values = r
+%>
+%for f in [x for x in fields if x in values]:
+<%
+result = ', '.join(values[f])
+%>
+${f}  ${result}
 %endfor
+
 %endfor
