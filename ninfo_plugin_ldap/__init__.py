@@ -17,8 +17,7 @@ class ldap_plugin(PluginBase):
         ldap_pw     = c['pw']
         server      = c['server']
         dsn         = c['dsn']
-        searchpre   = c.get('searchpre', 'uid')
-        searchpost  = c.get('searchpost', '')
+        search      = c.get('search', 'uid=%s')
         strip       = c.get('strip', '')
         ignore_cert = 'ignore_cert' in c
         if ignore_cert:
@@ -27,12 +26,11 @@ class ldap_plugin(PluginBase):
         self.l = ldap.initialize(server)
         self.l.simple_bind_s(ldap_user, ldap_pw)
         self.dsn = dsn
-        self.searchpre = searchpre
-        self.searchpost = searchpost
+        self.search = search
         self.strip = strip
 
     def get_info(self, arg):
-        search = '%s=%s%s' % (self.searchpre, arg, self.searchpost)
+        search = self.search.replace("%s", arg)
         res = self.l.search_s(self.dsn, self.ldap.SCOPE_SUBTREE, search)
         if not res:
             return None
