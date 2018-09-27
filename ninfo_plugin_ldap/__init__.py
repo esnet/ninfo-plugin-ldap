@@ -28,6 +28,7 @@ class ldap_plugin(PluginBase):
         self.l.simple_bind_s(ldap_user, ldap_pw)
         self.dsn = dsn
         self.search = search
+        self.second_pass_search = second_pass_search
         self.strip = strip
 
     def get_info(self, arg):
