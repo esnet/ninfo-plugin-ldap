@@ -37,9 +37,10 @@ class ldap_plugin(PluginBase):
         if not res:
             return None
 
-        if len(res) == 1 and self.second_pass_search:
+        if len(res) == 1 and res[0] and self.second_pass_search:
 	        # We got exactly one result, and we wanted a two_pass query
-	        second_pass_search = self.second_pass_search.replace("%s", arg)
+	        cn = res[0][0]
+	        second_pass_search = self.second_pass_search.replace("%s", cn)
 	        second_pass_res = self.l.search_s(self.dsn, self.ldap.SCOPE_SUBTREE, second_pass_search)
 	        if second_pass_res:
 		        res = second_pass_res
