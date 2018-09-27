@@ -18,6 +18,7 @@ class ldap_plugin(PluginBase):
         server      = c['server']
         dsn         = c['dsn']
         search      = c.get('search', 'uid=%s')
+        second_pass_search = c.get('second_pass_search', '')
         strip       = c.get('strip', '')
         ignore_cert = 'ignore_cert' in c
         if ignore_cert:
@@ -34,7 +35,15 @@ class ldap_plugin(PluginBase):
         res = self.l.search_s(self.dsn, self.ldap.SCOPE_SUBTREE, search)
         if not res:
             return None
-        
-        return {'records': res, 'strip': self.strip}
+
+        if len(res) == 1 and self.second_pass_search:
+	        # We got exactly one result, and we wanted a two_pass query
+	        second_pass_search = self.second_pass_search.replace("%s", arg)
+	        second_pass_res = self.l.search_s(self.dsn, self.ldap.SCOPE_SUBTREE, second_pass_search)
+	        if second_pass_res:
+		        res = second_pass_res
+
+	return {'records': res, 'strip': self.strip}
+	
 
 plugin_class = ldap_plugin
