@@ -43,7 +43,7 @@ class ldap_plugin(PluginBase):
 	        second_pass_search = self.second_pass_search.replace("%s", cn)
 	        second_pass_res = self.l.search_s(self.dsn, self.ldap.SCOPE_SUBTREE, second_pass_search)
 	        if second_pass_res:
-		        res = second_pass_res
+		        res.append(second_pass_res)
 
 	return {'records': res, 'strip': self.strip}
 	
